@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class OtoDomParser implements Parsers {
 
-    public static final String BASE_LINK = "https://www.otodom.pl/pl/oferty/wynajem/mieszkanie/wroclaw?distanceRadius=0&page=1&limit=100000&market=ALL&ownerTypeSingleSelect=ALL&locations=%5Bcities_6-39%5D&viewType=listing";
+    public static final String BASE_LINK = "https://www.otodom.pl/pl/oferty/wynajem/mieszkanie/wroclaw?distanceRadius=0&page=1&limit=300&market=ALL&ownerTypeSingleSelect=ALL&locations=%5Bcities_6-39%5D&viewType=listing&by=PRICE&direction=ASC";
     public static Site site = Site.OTODOM;
 
     @Override
@@ -24,7 +24,6 @@ public class OtoDomParser implements Parsers {
         Document doc = Parsers.getRawSite(BASE_LINK);
         ArrayList<String> links = getEstateLinks(doc);
         ArrayList<Double> prices = getEstatePrices(doc);
-
         for(int i = 0; i < links.size(); i++) {
             Estate estate = new Estate(links.get(i),prices.get(i),0, Site.OTODOM);
             if(estate.getUrl().contains("www.otodom.pl"))
@@ -36,9 +35,9 @@ public class OtoDomParser implements Parsers {
 
     private ArrayList<Double> getEstatePrices(Document doc) {
         ArrayList<String> result = new ArrayList<>();
-        Elements select = doc.select("div[class=\"css-itig98 eclomwz1\"]");
+        Elements select = doc.select("li[class=\"css-p74l73 es62z2j17\"]").select("a").select("article").select("div[class=\"css-itig98 eclomwz1\"]");
         for (Element element : select) {
-            result.add(element.select("span").first().text());
+            result.add(element.select("div[class=\"css-itig98 eclomwz1\"]").select("span").first().text());
         }
 
         return Parsers.parsePrices(result);
@@ -46,9 +45,9 @@ public class OtoDomParser implements Parsers {
 
     private ArrayList<String> getEstateLinks(Document doc) {
         ArrayList<String> result = new ArrayList<>();
-        Elements select = doc.select("a[data-cy=\"listing-item-link\"]");
+        Elements select = doc.select("ul[class=\"css-14cy79a e3x1uf06\"]").select("li[class=\"css-p74l73 es62z2j17\"]").select("a");
         for (Element element : select) {
-            result.add("www.otodom.pl" + element.attr("href"));
+            result.add("https://www.otodom.pl" + element.attr("href"));
         }
         return result;
     }

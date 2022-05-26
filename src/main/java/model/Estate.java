@@ -47,6 +47,6 @@ public class Estate {
 
     @Override
     public String toString() {
-        return "link: " + url + ", cena " + price + ", metraż: " + meters + ", portal: " + site;
+        return "link: " + url + ", cena " + price + ", portal: " + site;
     }
 }

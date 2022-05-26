@@ -8,7 +8,7 @@ public class ParserMachine {
             new MorizonParser(),
             new OlxParser(),
             new NieruchomosciOnlineParser(),
-           // new OtoDomParser()
+            new OtoDomParser()
     };
 
     public static void DownloadEstates(EstateList list) {
