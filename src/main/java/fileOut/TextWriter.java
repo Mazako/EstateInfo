@@ -13,7 +13,7 @@ public class TextWriter {
     public static String fileName = "MIESZKANIA.TXT";
 
 
-    private String date() {
+    public static String date() {
         LocalDateTime time = LocalDateTime.now();
         String date = time.getDayOfMonth() + " - " + time.getMonthValue() + " - " + time.getYear() + "  "
                 + time.getHour() + ":" + time.getMinute();

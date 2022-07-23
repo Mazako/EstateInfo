@@ -1,5 +1,6 @@
 package app;
 
+import fileOut.HTMLWriter;
 import fileOut.TextWriter;
 import model.Estate;
 import model.EstateList;
@@ -7,6 +8,7 @@ import parsers.MorizonParser;
 import parsers.OlxParser;
 import parsers.ParserMachine;
 
+import javax.swing.text.html.HTML;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -20,8 +22,9 @@ public class App {
         System.out.println("Podaj maksymalna cene: ");
         double maxprice = sc.nextDouble();
         List<Estate> result = list.PriceLowerThan(maxprice);
-        TextWriter writer = new TextWriter();
-        writer.saveToFile(result);
+        HTMLWriter writer = new HTMLWriter();
+        writer.writeList(result);
+        writer.saveToFile();
         System.out.println("Zapisano dane do pliku");
 
 

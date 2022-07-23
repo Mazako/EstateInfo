@@ -24,6 +24,8 @@ public class OtoDomParser implements Parsers {
         Document doc = Parsers.getRawSite(BASE_LINK);
         ArrayList<String> links = getEstateLinks(doc);
         ArrayList<Double> prices = getEstatePrices(doc);
+        System.out.println(links);
+        System.out.println(prices);
         for(int i = 0; i < links.size(); i++) {
             Estate estate = new Estate(links.get(i),prices.get(i),0, Site.OTODOM);
             if(estate.getUrl().contains("www.otodom.pl"))
@@ -35,9 +37,10 @@ public class OtoDomParser implements Parsers {
 
     private ArrayList<Double> getEstatePrices(Document doc) {
         ArrayList<String> result = new ArrayList<>();
-        Elements select = doc.select("li[class=\"css-p74l73 es62z2j17\"]").select("a").select("article").select("div[class=\"css-itig98 eclomwz1\"]");
+        Elements select = doc.select("div[class=\"css-i38lnz eclomwz1\"]");
         for (Element element : select) {
-            result.add(element.select("div[class=\"css-itig98 eclomwz1\"]").select("span").first().text());
+            String first = element.getElementsByClass("css-rmqm02 eclomwz0").first().text();
+            result.add(first);
         }
 
         return Parsers.parsePrices(result);
